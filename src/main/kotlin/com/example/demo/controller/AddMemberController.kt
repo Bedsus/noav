@@ -39,23 +39,33 @@ class AddMemberController : Controller() {
         surname: String,
         patronymicName: String,
         email: String,
+        phone: String,
         snils: String,
         dateEntry: String,
         dateDeparture: String,
         lpy: String,
-        position: String
+        position: String,
+        yearlyFee: String,
+        entranceFee: String,
+        doctorYear: String,
+        note: String
     ) {
         val member = Member(
-            id = freeId,
-            name = name,
-            surname = surname,
-            patronymicName = patronymicName,
-            email = email,
-            snils = snils,
-            dateEntry = dateEntry,
-            dateDeparture = dateDeparture,
-            lpy = lpyList.first { it.name == lpy },
-            position = positionList.first { it.name == position }
+                id = freeId,
+                name = name,
+                surname = surname,
+                patronymicName = patronymicName,
+                email = email,
+                phone = phone,
+                snils = snils,
+                dateEntry = dateEntry,
+                dateDeparture = dateDeparture,
+                lpy = lpyList.first { it.name == lpy },
+                position = positionList.first { it.name == position },
+                yearlyFee = yearlyFee,
+                entranceFee = entranceFee,
+                doctorYear = doctorYear,
+                note = note
         )
         member.show()
         //TODO Сохранение члена НОАВ
