@@ -23,8 +23,8 @@ class MainView : View() {
 class HelloWorldStyle : Stylesheet() {
     init {
         root {
-            prefWidth = 1000.px
-            prefHeight = 1000.px
+            prefWidth = 1200.px
+            prefHeight = 600.px
             alignment = Pos.CENTER
         }
     }
