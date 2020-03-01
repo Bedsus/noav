@@ -1,7 +1,7 @@
 package com.example.demo.app
 
-import com.example.demo.view.HelloWorldStyle
-import com.example.demo.view.MainView
+import com.example.demo.module.main.HelloWorldStyle
+import com.example.demo.module.main.MainView
 import tornadofx.*
 
 /**

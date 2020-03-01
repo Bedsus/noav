@@ -1,5 +1,6 @@
 package com.example.demo.view.dialogs
 
+import com.example.demo.util.Shortcut
 import javafx.application.Platform
 import tornadofx.*
 
@@ -9,11 +10,11 @@ class ConfirmExitView: View() {
         hbox {
             button("Да") {
                 action { Platform.exit() }
-                shortcut("Enter")
+                shortcut(Shortcut.CONFIRM.combo)
             }
             button("Отмена") {
                 action { close() }
-                shortcut("Esc")
+                shortcut(Shortcut.EXIT.combo)
             }
         }
     }

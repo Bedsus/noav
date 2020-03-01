@@ -1,35 +1,23 @@
-package com.example.demo.controller
+package com.example.demo.module.member
 
-import com.example.demo.data.Lpy
 import com.example.demo.data.Member
-import com.example.demo.data.Position
+import com.example.demo.data.lpyList
+import com.example.demo.data.positionList
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.*
 
-class AddMemberController : Controller() {
+class PersonalCardMemberController : Controller() {
 
     //TODO Получаем с базы
-    private val positionList = listOf(
-        Position(1, "Космитолог"),
-        Position(2, "Реанимотолог"),
-        Position(3, "Кардиолог")
-    )
-
-    //TODO Получаем с базы
-    private val lpyList = listOf(
-            Lpy(1, "ГКП 1"),
-            Lpy(2, "ГКП 2"),
-            Lpy(3, "ГКП 3")
-    )
-
-    //TODO Получаем с базы
-    private val freeId: Int
+    val freeId: Int
         get() = 1
 
+    //TODO Получаем с базы
     val positionObservableList: ObservableList<String>
         get() = FXCollections.observableList(positionList.map { it.name })
 
+    //TODO Получаем с базы
     val lpyObservableList: ObservableList<String>
         get() = FXCollections.observableList(lpyList.map { it.name })
 

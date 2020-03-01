@@ -20,6 +20,16 @@ class Member (
         var participateEvents: String,
         var note: String
 ) {
+
+    val fio: String
+        get() = "$surname $name $patronymicName"
+
+    val lpyName: String
+        get() = lpy.name
+
+    val positionName: String
+        get() = position.name
+
     fun show() {
         print("""
             
@@ -48,6 +58,7 @@ class Member (
         const val SURNAME_TEXT = "Фамилия"
         const val NAME_TEXT = "Имя"
         const val PATRONYMIC_TEXT = "Отчество"
+        const val FIO_TEXT = "ФИО"
         const val EMAIL_TEXT = "E-Mail"
         const val PHONE_TEXT = "Телефон"
         const val SNILS_TEXT = "СНИЛС"

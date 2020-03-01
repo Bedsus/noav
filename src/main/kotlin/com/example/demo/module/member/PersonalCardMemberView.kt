@@ -1,9 +1,9 @@
-package com.example.demo.view.member
+package com.example.demo.module.member
 
-import com.example.demo.controller.AddMemberController
 import com.example.demo.data.Lpy
 import com.example.demo.data.Member
 import com.example.demo.data.Position
+import com.example.demo.util.Shortcut
 import com.example.demo.view.Notification.showEmptyDataError
 import com.example.demo.view.Notification.showNotSelectedDataError
 import com.example.demo.view.Notification.showSaveNotification
@@ -15,9 +15,11 @@ import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import tornadofx.*
 
-class AddMemberView : View() {
+class PersonalCardMemberView : View() {
 
-    private val controller: AddMemberController by inject()
+    private val controller: PersonalCardMemberController by inject()
+
+    val memberId: Int by param()
 
     private var nameField: TextField by singleAssign()
     private var surnameField: TextField by singleAssign()
@@ -32,10 +34,10 @@ class AddMemberView : View() {
     private var positionComboBox: ComboBox<String> by singleAssign()
     private var lpyComboBox: ComboBox<String> by singleAssign()
     private var dateEntryDatePicker: DatePicker by singleAssign()
+    private var dateDepartureDatePicker: DatePicker by singleAssign()
 
     override val root = vbox {
-        title = ADD_MEMBER_TITLE
-        label("Информация о члене НОАВ # 23") { style { fontSize = 30.px } }
+        title = "$PERSONAL_CARD_TEXT №$memberId"
         hbox {
             form {
                 fieldset {
@@ -47,6 +49,7 @@ class AddMemberView : View() {
                     field(Member.ENTRANCE_FEE_TEXT) { entranceFeeField = textfield() }
                     field(Member.YEARLY_FEE_TEXT) { yearlyFeeField = textfield() }
                     field(Member.DATE_ENTRY_TEXT) { dateEntryDatePicker = getDatePicker() }
+                    field(Member.DATE_DEPARTURE_TEXT) { dateDepartureDatePicker = getDatePicker() }
                 }
             }
             form {
@@ -60,8 +63,8 @@ class AddMemberView : View() {
             }
         }
         hbox {
-            getButton(SAVE) { checkBySaveMember() }.apply { shortcut("Ctrl+S") }
-            getButton(CANCEL) { cancel() }.apply { shortcut("Esc") }
+            getButton(SAVE) { checkBySaveMember() }.apply { shortcut(Shortcut.SAVE.combo) }
+            getButton(CANCEL) { cancel() }.apply { shortcut(Shortcut.EXIT.combo) }
         }
     }
 
@@ -85,7 +88,7 @@ class AddMemberView : View() {
                 phone = phoneField.text,
                 snils = snilsField.text,
                 dateEntry = dateEntryDatePicker.editor.text,
-                dateDeparture = "",
+                dateDeparture = dateDepartureDatePicker.editor.text,
                 lpy = lpyComboBox.selectedItem ?: "",
                 position = positionComboBox.selectedItem ?: "",
                 yearlyFee = yearlyFeeField.text,
@@ -101,7 +104,8 @@ class AddMemberView : View() {
     }
 
     companion object {
-        const val ADD_MEMBER_TITLE = "Добавление члена НОАВ"
+        const val ADD_MEMBER_TEXT = "Добавление члена НОАВ"
+        const val PERSONAL_CARD_TEXT = "Личная карточка"
         const val SAVE = "Сохранить"
         const val CANCEL = "Отмена"
     }
