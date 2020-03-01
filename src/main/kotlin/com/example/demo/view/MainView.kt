@@ -9,7 +9,7 @@ class MainView : View() {
 
     override val root = vbox(5) {
         label("НОАВ 2.0")
-        button("Добавление члена НОАВ").apply {
+        button(AddMemberView.ADD_MEMBER_TITLE).apply {
             action { openInternalWindow<AddMemberView>() }
             shortcut("Ctrl+N")
         }

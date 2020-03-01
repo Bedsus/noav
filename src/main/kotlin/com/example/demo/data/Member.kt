@@ -2,54 +2,60 @@ package com.example.demo.data
 
 /**
  * Полная информация о члене НОАВ
- *
- * [id] - уникальный номер
- * [name] - имя
- * [surname] - фамилия
- * [patronymicName] - отчество
- * [email] - почта в сети
- * [snils] - СНИЛС
- * [dateEntry] - дата вступления в организацию
- * [dateDeparture] - дата ухода из организации
- * [lpy] - ЛПУ
- * [position] - Должность сотрудника
  */
 class Member (
-    val id: Int,
-    var name: String,
-    var surname: String,
-    var patronymicName: String,
-    var email: String,
-    var phone: String,
-    var snils: String,
-    var dateEntry: String,
-    var dateDeparture: String,
-    var lpy: Lpy,
-    var position: Position,
-    var yearlyFee: String,
-    var entranceFee: String,
-    var doctorYear: String,
-    var note: String
+        val id: Int,
+        var name: String,
+        var surname: String,
+        var patronymicName: String,
+        var email: String,
+        var phone: String,
+        var snils: String,
+        var dateEntry: String,
+        var dateDeparture: String,
+        var lpy: Lpy,
+        var position: Position,
+        var yearlyFee: String,
+        var entranceFee: String,
+        var participateEvents: String,
+        var note: String
 ) {
     fun show() {
         print("""
-        * [$id] - уникальный номер
-        * [$name] - имя
-        * [$surname] - фамилия
-        * [$patronymicName] - отчество
-        * [$email] - почта в сети
-        * [$phone] - телефон
-        * [$snils] - СНИЛС
-        * [$dateEntry] - дата вступления в организацию
-        * [$dateDeparture] - дата ухода из организации
-        * [$yearlyFee] - ежегодный взнос
-        * [$entranceFee] - вступительный взнос
-        * [${lpy.id}] - номер ЛПУ
-        * [${lpy.name}] - наименование ЛПУ
-        * [${position.id}] - номер должность сотрудника
-        * [${position.name}] - наименование должности сотрудника
-        * [$doctorYear] - Врач года
-        * [$note] - Примечание
+            
+         $MEMBER_TEXT:   
+        * [$id] - $ID_TEXT
+        * [$surname] - $SURNAME_TEXT
+        * [$name] - $NAME_TEXT
+        * [$patronymicName] - $PATRONYMIC_TEXT
+        * [$email] - $EMAIL_TEXT
+        * [$phone] - $PHONE_TEXT
+        * [$snils] - $SNILS_TEXT
+        * [$dateEntry] - $DATE_ENTRY_TEXT
+        * [$dateDeparture] - $DATE_DEPARTURE_TEXT
+        * [$yearlyFee] - $YEARLY_FEE_TEXT
+        * [$entranceFee] - $ENTRANCE_FEE_TEXT
+        * [$participateEvents] - $PARTICIPATE_EVENT_TEXT
+        * [$note] - $NOTE_TEXT
         """.trimIndent())
+        position.show()
+        lpy.show()
+    }
+
+    companion object {
+        const val MEMBER_TEXT = "Член НОАВ"
+        const val ID_TEXT = "Номер членской карты"
+        const val SURNAME_TEXT = "Фамилия"
+        const val NAME_TEXT = "Имя"
+        const val PATRONYMIC_TEXT = "Отчество"
+        const val EMAIL_TEXT = "E-Mail"
+        const val PHONE_TEXT = "Телефон"
+        const val SNILS_TEXT = "СНИЛС"
+        const val DATE_ENTRY_TEXT = "Дата вступления"
+        const val DATE_DEPARTURE_TEXT = "Дата ухода"
+        const val YEARLY_FEE_TEXT = "Ежегодный взнос"
+        const val ENTRANCE_FEE_TEXT = "Вступительный взнос"
+        const val PARTICIPATE_EVENT_TEXT = "Участие в конкурсах"
+        const val NOTE_TEXT = "Примечание"
     }
 }

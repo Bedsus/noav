@@ -1,20 +1,25 @@
 package com.example.demo.view.member
 
 import com.example.demo.controller.AddMemberController
-import com.example.demo.view.showShortNotification
+import com.example.demo.data.Lpy
+import com.example.demo.data.Member
+import com.example.demo.data.Position
+import com.example.demo.view.Notification.showEmptyDataError
+import com.example.demo.view.Notification.showNotSelectedDataError
+import com.example.demo.view.Notification.showSaveNotification
+import com.example.demo.view.getButton
+import com.example.demo.view.getDatePicker
 import javafx.scene.control.ComboBox
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
-import javafx.util.converter.LocalDateStringConverter
 import tornadofx.*
-import java.time.format.DateTimeFormatter
 
 class AddMemberView : View() {
 
     private val controller: AddMemberController by inject()
 
-    private var firstNameField: TextField by singleAssign()
+    private var nameField: TextField by singleAssign()
     private var surnameField: TextField by singleAssign()
     private var patronymicNameField: TextField by singleAssign()
     private var yearlyFeeField: TextField by singleAssign()
@@ -23,69 +28,57 @@ class AddMemberView : View() {
     private var emailField: TextField by singleAssign()
     private var phoneField: TextField by singleAssign()
     private var noteTextArea: TextArea by singleAssign()
-    private var doctorYearTextArea: TextArea by singleAssign()
+    private var participateEventsTextArea: TextArea by singleAssign()
     private var positionComboBox: ComboBox<String> by singleAssign()
     private var lpyComboBox: ComboBox<String> by singleAssign()
     private var dateEntryDatePicker: DatePicker by singleAssign()
 
     override val root = vbox {
-        title = "Добавление члена НОАВ"
+        title = ADD_MEMBER_TITLE
         label("Информация о члене НОАВ # 23") { style { fontSize = 30.px } }
         hbox {
             form {
                 fieldset {
-                    field("Фамилия") { surnameField = textfield() }
-                    field("Имя") { firstNameField = textfield() }
-                    field("Отчество") { patronymicNameField = textfield() }
-                    field("Должность") { positionComboBox = combobox { items = controller.positionObservableList } }
-                    field("ЛПУ") { lpyComboBox = combobox { items = controller.lpyObservableList } }
-                    field("Вступительный взнос") { entranceFeeField = textfield() }
-                    field("Ежегодный взнос") { yearlyFeeField = textfield() }
-                    field("Дата вступления") { dateEntryDatePicker = datepicker {   // TODO сдвигается окно выбора даты
-                        val pattern = "dd-MM-yyyy"
-                        val dateFormatter = DateTimeFormatter.ofPattern(pattern)
-                        converter = LocalDateStringConverter(dateFormatter, dateFormatter)
-                    } }
+                    field(Member.SURNAME_TEXT) { surnameField = textfield() }
+                    field(Member.NAME_TEXT) { nameField = textfield() }
+                    field(Member.PATRONYMIC_TEXT) { patronymicNameField = textfield() }
+                    field(Position.POSITION_TEXT) { positionComboBox = combobox { items = controller.positionObservableList } }
+                    field(Lpy.LPY_TEXT) { lpyComboBox = combobox { items = controller.lpyObservableList } }
+                    field(Member.ENTRANCE_FEE_TEXT) { entranceFeeField = textfield() }
+                    field(Member.YEARLY_FEE_TEXT) { yearlyFeeField = textfield() }
+                    field(Member.DATE_ENTRY_TEXT) { dateEntryDatePicker = getDatePicker() }
                 }
             }
             form {
                 fieldset {
-                    field("СНИЛС") { snilsField = textfield() }
-                    field("E-mail") { emailField = textfield() }
-                    field("Телефон") { phoneField = textfield() }
-                    field("Врач года") { doctorYearTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 }  }
-                    field("Примечание") { noteTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 } }
+                    field(Member.SNILS_TEXT) { snilsField = textfield() }
+                    field(Member.EMAIL_TEXT) { emailField = textfield() }
+                    field(Member.PHONE_TEXT) { phoneField = textfield() }
+                    field(Member.PARTICIPATE_EVENT_TEXT) { participateEventsTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 }  }
+                    field(Member.NOTE_TEXT) { noteTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 } }
                 }
             }
         }
         hbox {
-            button("Сохранить") {
-                style { fontSize = 15.px }
-                action { checkBySaveMember() }
-                shortcut("Ctrl+S")
-            }
-            button("Отмена") {
-                style { fontSize = 15.px }
-                action { cancel() }
-                shortcut("Esc")
-            }
+            getButton(SAVE) { checkBySaveMember() }.apply { shortcut("Ctrl+S") }
+            getButton(CANCEL) { cancel() }.apply { shortcut("Esc") }
         }
     }
 
     private fun checkBySaveMember() {
         when {
-            firstNameField.text.isEmpty() -> showShortNotification(INPUT_ERROR, NAME_INPUT_ERROR)
-            surnameField.text.isEmpty() -> showShortNotification(INPUT_ERROR, SURNAME_INPUT_ERROR)
-            patronymicNameField.text.isEmpty() -> showShortNotification(INPUT_ERROR, PATRONYMIC_INPUT_ERROR)
-            positionComboBox.selectedItem == null -> showShortNotification(INPUT_ERROR, POSITION_SELECT_ERROR)
-            lpyComboBox.selectedItem == null -> showShortNotification(INPUT_ERROR, LPY_SELECT_ERROR)
+            surnameField.text.isEmpty() -> showEmptyDataError(Member.SURNAME_TEXT)
+            nameField.text.isEmpty() -> showEmptyDataError(Member.NAME_TEXT)
+            patronymicNameField.text.isEmpty() -> showEmptyDataError(Member.PATRONYMIC_TEXT)
+            positionComboBox.selectedItem == null -> showNotSelectedDataError(Position.NAME_POSITION_TEXT)
+            lpyComboBox.selectedItem == null -> showNotSelectedDataError(Lpy.NAME_LPY_TEXT)
             else -> saveMember()
         }
     }
 
     private fun saveMember() {
         controller.saveMember(
-                name = firstNameField.text,
+                name = nameField.text,
                 surname = surnameField.text,
                 patronymicName = patronymicNameField.text,
                 email = emailField.text,
@@ -97,10 +90,10 @@ class AddMemberView : View() {
                 position = positionComboBox.selectedItem ?: "",
                 yearlyFee = yearlyFeeField.text,
                 entranceFee = entranceFeeField.text,
-                doctorYear = doctorYearTextArea.text,
+                participateEvents = participateEventsTextArea.text,
                 note = noteTextArea.text
         )
-        showShortNotification(SUCCESS, SAVED)
+        showSaveNotification()
     }
 
     private fun cancel() {
@@ -108,14 +101,8 @@ class AddMemberView : View() {
     }
 
     companion object {
-        const val INPUT_ERROR = "Ошибка ввода"
-        const val NAME_INPUT_ERROR = "Поле Имя не должно быть пустым!"
-        const val SURNAME_INPUT_ERROR = "Поле Фамилия не должно быть пустым!"
-        const val PATRONYMIC_INPUT_ERROR = "Поле Отчество не должно быть пустым!"
-        const val POSITION_SELECT_ERROR = "Необходимо выбрать должность!"
-        const val LPY_SELECT_ERROR = "Необходимо выбрать ЛПУ!"
-        const val SAVED = "Сохранено"
-        const val SUCCESS = "Успешно"
+        const val ADD_MEMBER_TITLE = "Добавление члена НОАВ"
+        const val SAVE = "Сохранить"
+        const val CANCEL = "Отмена"
     }
-
 }

@@ -5,7 +5,7 @@ import com.example.demo.data.Member
 import com.example.demo.data.Position
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import tornadofx.Controller
+import tornadofx.*
 
 class AddMemberController : Controller() {
 
@@ -35,20 +35,20 @@ class AddMemberController : Controller() {
 
 
     fun saveMember(
-        name: String,
-        surname: String,
-        patronymicName: String,
-        email: String,
-        phone: String,
-        snils: String,
-        dateEntry: String,
-        dateDeparture: String,
-        lpy: String,
-        position: String,
-        yearlyFee: String,
-        entranceFee: String,
-        doctorYear: String,
-        note: String
+            name: String,
+            surname: String,
+            patronymicName: String,
+            email: String,
+            phone: String,
+            snils: String,
+            dateEntry: String,
+            dateDeparture: String,
+            lpy: String,
+            position: String,
+            yearlyFee: String,
+            entranceFee: String,
+            participateEvents: String,
+            note: String
     ) {
         val member = Member(
                 id = freeId,
@@ -64,7 +64,7 @@ class AddMemberController : Controller() {
                 position = positionList.first { it.name == position },
                 yearlyFee = yearlyFee,
                 entranceFee = entranceFee,
-                doctorYear = doctorYear,
+                participateEvents = participateEvents,
                 note = note
         )
         member.show()
