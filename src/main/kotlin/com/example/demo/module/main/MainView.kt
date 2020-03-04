@@ -58,7 +58,7 @@ class HelloWorldStyle : Stylesheet() {
     init {
         root {
             prefWidth = 1200.px
-            prefHeight = 800.px
+            prefHeight = 600.px
           //  alignment = Pos.CENTER
         }
     }

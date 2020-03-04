@@ -2,6 +2,7 @@ package com.example.demo.data
 
 import tornadofx.getProperty
 import tornadofx.property
+import java.time.LocalDate
 
 /**
  * Полная информация о члене НОАВ
@@ -29,10 +30,10 @@ class Member {
     var snils by property<String>()
     fun snilsProperty() = getProperty(Member::snils)
 
-    var dateEntry by property<String>()
+    var dateEntry by property<LocalDate>()
     fun dateEntryProperty() = getProperty(Member::dateEntry)
 
-    var dateDeparture by property<String>()
+    var dateDeparture by property<LocalDate>()
     fun dateDepartureProperty() = getProperty(Member::dateDeparture)
 
     var lpy by property<Lpy>()

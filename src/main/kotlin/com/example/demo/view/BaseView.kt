@@ -3,6 +3,7 @@ package com.example.demo.view
 import javafx.event.EventTarget
 import javafx.scene.control.Button
 import javafx.scene.control.DatePicker
+import javafx.scene.control.TextArea
 import javafx.util.converter.LocalDateStringConverter
 import tornadofx.*
 import java.time.format.DateTimeFormatter
@@ -12,6 +13,10 @@ inline fun EventTarget.getButton(name: String, crossinline onClick: () -> Unit):
         style { fontSize = 15.px }
         action { onClick() }
     }
+}
+
+fun EventTarget.getTextArea(): TextArea {
+    return textarea { prefColumnCount = 2; prefRowCount = 3 }
 }
 
 fun EventTarget.getDatePicker(): DatePicker {

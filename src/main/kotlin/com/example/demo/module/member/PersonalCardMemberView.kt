@@ -9,9 +9,8 @@ import com.example.demo.view.Notification.showNotSelectedDataError
 import com.example.demo.view.Notification.showSaveNotification
 import com.example.demo.view.getButton
 import com.example.demo.view.getDatePicker
+import com.example.demo.view.getTextArea
 import javafx.scene.control.ComboBox
-import javafx.scene.control.DatePicker
-import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import tornadofx.*
 
@@ -19,47 +18,45 @@ class PersonalCardMemberView : View() {
 
     private val controller: PersonalCardMemberController by inject()
 
-    val memberId: Int by param()
-    val member = Member()
+    //val memberId: Int by param()
+    private val memberModel = MemberModel(Member())
+    private var positionName: String = ""
 
     private var nameField: TextField by singleAssign()
     private var surnameField: TextField by singleAssign()
     private var patronymicNameField: TextField by singleAssign()
-    private var yearlyFeeField: TextField by singleAssign()
-    private var entranceFeeField: TextField by singleAssign()
-    private var snilsField: TextField by singleAssign()
-    private var emailField: TextField by singleAssign()
-    private var phoneField: TextField by singleAssign()
-    private var noteTextArea: TextArea by singleAssign()
-    private var participateEventsTextArea: TextArea by singleAssign()
     private var positionComboBox: ComboBox<String> by singleAssign()
     private var lpyComboBox: ComboBox<String> by singleAssign()
-    private var dateEntryDatePicker: DatePicker by singleAssign()
-    private var dateDepartureDatePicker: DatePicker by singleAssign()
 
     override val root = vbox {
         title = "$PERSONAL_CARD_TEXT №1"
         hbox {
             form {
                 fieldset {
-                    field(Member.SURNAME_TEXT) { textfield().bind(member.surnameProperty()) }
-                    field(Member.NAME_TEXT) { nameField = textfield() }
-                    field(Member.PATRONYMIC_TEXT) { patronymicNameField = textfield() }
-                    field(Position.POSITION_TEXT) { positionComboBox = combobox { items = controller.positionObservableList } }
-                    field(Lpy.LPY_TEXT) { lpyComboBox = combobox { items = controller.lpyObservableList } }
-                    field(Member.ENTRANCE_FEE_TEXT) { entranceFeeField = textfield() }
-                    field(Member.YEARLY_FEE_TEXT) { yearlyFeeField = textfield() }
-                    field(Member.DATE_ENTRY_TEXT) { dateEntryDatePicker = getDatePicker() }
-                    field(Member.DATE_DEPARTURE_TEXT) { dateDepartureDatePicker = getDatePicker() }
+                    field(Member.SURNAME_TEXT) { textfield().bind(memberModel.surname) }
+                    field(Member.NAME_TEXT) { textfield().bind(memberModel.name) }
+                    field(Member.PATRONYMIC_TEXT) { textfield().bind(memberModel.patronymicName) }
+                    field(Position.POSITION_TEXT) { combobox<String> {
+                        items = controller.positionObservableList
+                       // memberModel.rebindOnChange(selectionModel.selectedItemProperty()) { positionName = it ?: "" }
+                    }}
+                    field(Lpy.LPY_TEXT) { combobox<String> {
+                        items = controller.lpyObservableList
+
+                    }}
+                    field(Member.ENTRANCE_FEE_TEXT) { textfield().bind(memberModel.entranceFee) }
+                    field(Member.YEARLY_FEE_TEXT) { textfield().bind(memberModel.yearlyFee) }
+                    field(Member.DATE_ENTRY_TEXT) { getDatePicker().bind(memberModel.dateEntry) }
+                    field(Member.DATE_DEPARTURE_TEXT) { getDatePicker().bind(memberModel.dateDeparture) }
                 }
             }
             form {
                 fieldset {
-                    field(Member.SNILS_TEXT) { snilsField = textfield() }
-                    field(Member.EMAIL_TEXT) { emailField = textfield() }
-                    field(Member.PHONE_TEXT) { phoneField = textfield() }
-                    field(Member.PARTICIPATE_EVENT_TEXT) { participateEventsTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 }  }
-                    field(Member.NOTE_TEXT) { noteTextArea = textarea { prefColumnCount = 2; prefRowCount = 3 } }
+                    field(Member.SNILS_TEXT) { textfield().bind(memberModel.snils) }
+                    field(Member.EMAIL_TEXT) { textfield().bind(memberModel.email) }
+                    field(Member.PHONE_TEXT) { textfield().bind(memberModel.phone) }
+                    field(Member.PARTICIPATE_EVENT_TEXT) { getTextArea().bind(memberModel.participateEvents) }
+                    field(Member.NOTE_TEXT) { getTextArea().bind(memberModel.note) }
                 }
             }
         }
@@ -105,7 +102,7 @@ class PersonalCardMemberView : View() {
     }
 
     companion object {
-        const val ADD_MEMBER_TEXT = "Добавление члена НОАВ"
+      //  const val ADD_MEMBER_TEXT = "Добавление члена НОАВ"
         const val PERSONAL_CARD_TEXT = "Личная карточка"
         const val SAVE = "Сохранить"
         const val CANCEL = "Отмена"
