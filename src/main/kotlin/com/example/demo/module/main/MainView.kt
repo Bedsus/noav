@@ -1,7 +1,6 @@
 package com.example.demo.module.main
 
 import com.example.demo.module.member.PersonalCardMemberView
-import com.example.demo.module.tableMember.Dog
 import com.example.demo.module.tableMember.TableMemberController
 import com.example.demo.util.Shortcut
 import tornadofx.*
@@ -36,18 +35,15 @@ class MainView : View() {
                 }
             }
         }
-        listview(controller.loadDogs().message)
-//        controller.showFilms {
-//            tableView.asyncItems { it }
-//        }
+       // listview(controller.loadDogs().message)
 //        tableview(controller.memberList) {
 //            isEditable = true
-//            readonlyColumn(Member.ID_TEXT, Member::id)
+//            column(Member.ID_TEXT, Member::idProperty).makeEditable()
 //            readonlyColumn(Member.FIO_TEXT, Member::fio)
 //            readonlyColumn(Lpy.LPY_TEXT, Member::lpyName)
 //            readonlyColumn(Position.POSITION_TEXT, Member::positionName)
-//            column(Member.DATE_ENTRY_TEXT, Member::dateEntry)
-//            column(Member.DATE_DEPARTURE_TEXT, Member::dateDeparture)
+//            column(Member.DATE_ENTRY_TEXT, Member::dateEntryProperty).makeEditable()
+//            column(Member.DATE_DEPARTURE_TEXT, Member::dateDepartureProperty).makeEditable()
 //            onDoubleClick {
 //                val id = selectedItem?.id ?: 0
 //                openInternalWindow<PersonalCardMemberView>(params = mapOf(PersonalCardMemberView::memberId to id))

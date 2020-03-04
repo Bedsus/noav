@@ -20,6 +20,7 @@ class PersonalCardMemberView : View() {
     private val controller: PersonalCardMemberController by inject()
 
     val memberId: Int by param()
+    val member = Member()
 
     private var nameField: TextField by singleAssign()
     private var surnameField: TextField by singleAssign()
@@ -41,7 +42,7 @@ class PersonalCardMemberView : View() {
         hbox {
             form {
                 fieldset {
-                    field(Member.SURNAME_TEXT) { surnameField = textfield() }
+                    field(Member.SURNAME_TEXT) { textfield().bind(member.surnameProperty()) }
                     field(Member.NAME_TEXT) { nameField = textfield() }
                     field(Member.PATRONYMIC_TEXT) { patronymicNameField = textfield() }
                     field(Position.POSITION_TEXT) { positionComboBox = combobox { items = controller.positionObservableList } }
@@ -80,22 +81,22 @@ class PersonalCardMemberView : View() {
     }
 
     private fun saveMember() {
-        controller.saveMember(
-                name = nameField.text,
-                surname = surnameField.text,
-                patronymicName = patronymicNameField.text,
-                email = emailField.text,
-                phone = phoneField.text,
-                snils = snilsField.text,
-                dateEntry = dateEntryDatePicker.editor.text,
-                dateDeparture = dateDepartureDatePicker.editor.text,
-                lpy = lpyComboBox.selectedItem ?: "",
-                position = positionComboBox.selectedItem ?: "",
-                yearlyFee = yearlyFeeField.text,
-                entranceFee = entranceFeeField.text,
-                participateEvents = participateEventsTextArea.text,
-                note = noteTextArea.text
-        )
+//        controller.saveMember(
+//                name = nameField.text,
+//                surname = surnameField.text,
+//                patronymicName = patronymicNameField.text,
+//                email = emailField.text,
+//                phone = phoneField.text,
+//                snils = snilsField.text,
+//                dateEntry = dateEntryDatePicker.editor.text,
+//                dateDeparture = dateDepartureDatePicker.editor.text,
+//                lpy = lpyComboBox.selectedItem ?: "",
+//                position = positionComboBox.selectedItem ?: "",
+//                yearlyFee = yearlyFeeField.text,
+//                entranceFee = entranceFeeField.text,
+//                participateEvents = participateEventsTextArea.text,
+//                note = noteTextArea.text
+//        )
         showSaveNotification()
     }
 
