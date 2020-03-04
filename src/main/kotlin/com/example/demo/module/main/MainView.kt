@@ -1,10 +1,9 @@
 package com.example.demo.module.main
 
 import com.example.demo.module.member.PersonalCardMemberView
-import com.example.demo.module.tableMember.Dogi
+import com.example.demo.module.tableMember.Dog
 import com.example.demo.module.tableMember.TableMemberController
 import com.example.demo.util.Shortcut
-import javafx.scene.control.TableView
 import tornadofx.*
 
 class MainView : View() {
@@ -26,21 +25,21 @@ class MainView : View() {
                     shortcut(Shortcut.NEW.combo)
                 }
                 button("Отчеты").apply {
-                    action { openInternalWindow<PersonalCardMemberView>() }
+                    action {
+                        // TODO Открываем отчеты
+                    }
                     style {
-                        prefWidth = 70.px
                         prefHeight = 50.px
+                        prefWidth = 70.px
                     }
                     shortcut(Shortcut.NEW.combo)
                 }
             }
         }
-        val tableView: TableView<Dogi> = tableview(mutableListOf<Dogi>().observable()) {
-            readonlyColumn("Собачки", Dogi::name)
-        }
-        controller.showFilms {
-            tableView.asyncItems { it }
-        }
+        listview(controller.loadDogs().message)
+//        controller.showFilms {
+//            tableView.asyncItems { it }
+//        }
 //        tableview(controller.memberList) {
 //            isEditable = true
 //            readonlyColumn(Member.ID_TEXT, Member::id)
@@ -51,18 +50,19 @@ class MainView : View() {
 //            column(Member.DATE_DEPARTURE_TEXT, Member::dateDeparture)
 //            onDoubleClick {
 //                val id = selectedItem?.id ?: 0
-//                //openInternalWindow<PersonalCardMemberView>(params = mapOf(PersonalCardMemberView::memberId to id))
+//                openInternalWindow<PersonalCardMemberView>(params = mapOf(PersonalCardMemberView::memberId to id))
 //                //find<PersonalCardMemberView>(mapOf(PersonalCardMemberView::memberId to id)).openWindow()
 //            }
 //        }
     }
+
 }
 
 class HelloWorldStyle : Stylesheet() {
     init {
         root {
             prefWidth = 1200.px
-            prefHeight = 600.px
+            prefHeight = 800.px
           //  alignment = Pos.CENTER
         }
     }

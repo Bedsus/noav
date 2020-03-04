@@ -37,7 +37,7 @@ class PersonalCardMemberView : View() {
     private var dateDepartureDatePicker: DatePicker by singleAssign()
 
     override val root = vbox {
-        title = "$PERSONAL_CARD_TEXT №$memberId"
+        title = "$PERSONAL_CARD_TEXT №1"
         hbox {
             form {
                 fieldset {

@@ -63,7 +63,7 @@ class Member (
         const val PHONE_TEXT = "Телефон"
         const val SNILS_TEXT = "СНИЛС"
         const val DATE_ENTRY_TEXT = "Дата вступления"
-        const val DATE_DEPARTURE_TEXT = "Дата ухода"
+        const val DATE_DEPARTURE_TEXT = "Дата выхода"
         const val YEARLY_FEE_TEXT = "Ежегодный взнос"
         const val ENTRANCE_FEE_TEXT = "Вступительный взнос"
         const val PARTICIPATE_EVENT_TEXT = "Участие в конкурсах"
