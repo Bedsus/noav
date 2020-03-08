@@ -1,5 +1,7 @@
 package com.example.demo.data
 
+import java.time.LocalDate
+
 val positionList = listOf(
         Position(1, "Космитолог"),
         Position(2, "Реанимотолог"),
@@ -30,24 +32,24 @@ val lpyList = listOf(
 //        note = ""
 //)
 //
-//fun createMember(id: Int) =  Member(
-//        id = id,
-//        name = "Станислав",
-//        surname = "Бубнов",
-//        patronymicName = "Юрьевич",
-//        email = "bubnovstas@mail.ru",
-//        phone = "89232304358",
-//        snils = "12342574",
-//        dateEntry = "01.03.20",
-//        dateDeparture = "02.03.20",
-//        lpy = lpyList[0],
-//        position = positionList[0],
-//        yearlyFee = "100",
-//        entranceFee = "200",
-//        participateEvents = "нет",
-//        note = ""
-//)
-//
+fun createMember(id: Int) =  Member().apply {
+    this.id = id
+    name = "Станислав"
+    surname = "Бубнов"
+    patronymicName = "Юрьевич"
+    email = "bubnovstas@mail.ru"
+    phone = "89232304358"
+    snils = "12342574"
+    dateEntry = LocalDate.now()
+    dateDeparture = LocalDate.now()
+    lpy = lpyList[0]
+    position = positionList[0]
+    yearlyFee = "100"
+    entranceFee = "200"
+    participateEvents = "нет"
+    note = ""
+}
+
 //val member2 =  Member(
 //        id = 2,
 //        name = "Вероника",
