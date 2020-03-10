@@ -1,9 +1,10 @@
 package com.example.demo.module.member
 
 import com.example.demo.data.Member
-import tornadofx.ItemViewModel
+import tornadofx.*
 
-class MemberModel(member: Member) : ItemViewModel<Member>(member) {
+class MemberModel(member: Member = Member()) : ItemViewModel<Member>(member) {
+    val id = bind(Member::idProperty)
     val name = bind(Member::nameProperty)
     val surname = bind(Member::surnameProperty)
     val patronymicName = bind(Member::patronymicNameProperty)
@@ -13,7 +14,7 @@ class MemberModel(member: Member) : ItemViewModel<Member>(member) {
     val dateEntry = bind(Member::dateEntryProperty)
     val dateDeparture = bind(Member::dateDepartureProperty)
     val lpy = bind(Member::lpyProperty)
-    var position = bind(Member::positionProperty)
+    val position = bind(Member::positionProperty)
     val yearlyFee = bind(Member::yearlyFeeProperty)
     val entranceFee = bind(Member::entranceFeeProperty)
     val participateEvents = bind(Member::participateEventsProperty)

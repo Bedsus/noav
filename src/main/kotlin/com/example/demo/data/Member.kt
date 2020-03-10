@@ -1,7 +1,6 @@
 package com.example.demo.data
 
-import tornadofx.getProperty
-import tornadofx.property
+import tornadofx.*
 import java.time.LocalDate
 
 /**
@@ -9,59 +8,53 @@ import java.time.LocalDate
  */
 class Member {
 
-    var id by property<Int>()
+    var id: Int by property(0)
     fun idProperty() = getProperty(Member::id)
 
-    var name by property<String>()
+    var name: String by property("")
     fun nameProperty() = getProperty(Member::name)
 
-    var surname by property<String>()
+    var surname: String by property("")
     fun surnameProperty() = getProperty(Member::surname)
 
-    var patronymicName by property<String>()
+    var patronymicName: String by property("")
     fun patronymicNameProperty() = getProperty(Member::patronymicName)
 
-    var email by property<String>()
+    var email: String by property("")
     fun emailProperty() = getProperty(Member::email)
 
-    var phone by property<String>()
+    var phone: String by property("")
     fun phoneProperty() = getProperty(Member::phone)
 
-    var snils by property<String>()
+    var snils: String by property("")
     fun snilsProperty() = getProperty(Member::snils)
 
-    var dateEntry by property<LocalDate>()
+    var dateEntry: LocalDate by property(LocalDate.now())
     fun dateEntryProperty() = getProperty(Member::dateEntry)
 
-    var dateDeparture by property<LocalDate>()
+    var dateDeparture: LocalDate by property<LocalDate>(null)
     fun dateDepartureProperty() = getProperty(Member::dateDeparture)
 
-    var lpy by property<Lpy>()
+    var lpy: Lpy by property(lpyList[0])
     fun lpyProperty() = getProperty(Member::lpy)
 
-    var position by property<Position>()
+    var position: Position by property(positionList[0])
     fun positionProperty() = getProperty(Member::position)
 
-    var yearlyFee by property<String>()
+    var yearlyFee: String by property("")
     fun yearlyFeeProperty() = getProperty(Member::yearlyFee)
 
-    var entranceFee by property<String>()
+    var entranceFee: String by property("")
     fun entranceFeeProperty() = getProperty(Member::entranceFee)
 
-    var participateEvents by property<String>()
+    var participateEvents: String by property("")
     fun participateEventsProperty() = getProperty(Member::participateEvents)
 
-    var note by property<String>()
+    var note: String by property("")
     fun noteProperty() = getProperty(Member::note)
 
     val fio: String
         get() = "$surname $name $patronymicName"
-
-    val lpyName: String
-        get() = lpy.name
-
-    val positionName: String
-        get() = position.name
 
     override fun toString(): String {
         return """
@@ -85,6 +78,7 @@ class Member {
     }
 
     companion object {
+        const val PERSONAL_CARD_TEXT = "Личная карточка"
         const val MEMBER_TEXT = "Член НОАВ"
         const val ID_TEXT = "Номер членской карты"
         const val SURNAME_TEXT = "Фамилия"

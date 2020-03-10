@@ -1,12 +1,14 @@
 package com.example.demo.data
 
+import tornadofx.*
+
 /**
  * Лечебно-профилактические учреждения
  */
-class Lpy (
-    val id: Int,
-    val name: String
-) {
+class Lpy(id: Int = 0, name: String = "") {
+
+    var id: Int by property(id)
+    val name: String by property(name)
 
     fun show() {
         print("""

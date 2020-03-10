@@ -1,12 +1,14 @@
 package com.example.demo.data
 
+import tornadofx.*
+
 /**
  * Должность сотрудников
  */
-class Position (
-    val id: Int,
-    val name: String
-) {
+class Position(id: Int = 0, name: String = "") {
+
+    var id: Int by property(id)
+    var name: String by property(name)
 
     fun show() {
         print("""
