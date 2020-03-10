@@ -25,7 +25,7 @@ class PersonalCardMemberView : View() {
                     field(Member.ID_TEXT) { text().bind(model.id) }
                     field(Member.SURNAME_TEXT) { textfield(model.surname).valid() }
                     field(Member.NAME_TEXT) { textfield(model.name).valid() }
-                    field(Member.PATRONYMIC_TEXT) { textfield(model.patronymicName).valid() }
+                    field(Member.PATRONYMIC_TEXT) { textfield(model.patronymicName) }
                     field(Position.POSITION_TEXT) {
                         combobox<Position>(model.position, values = controller.positionObservableList) {
                             cellFormat { text = it.name }
