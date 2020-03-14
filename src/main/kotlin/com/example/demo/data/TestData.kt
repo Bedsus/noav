@@ -1,5 +1,7 @@
 package com.example.demo.data
 
+import com.example.demo.module.payment.Payment
+import com.example.demo.module.payment.PaymentModel
 import java.time.LocalDate
 
 val positionList = listOf(
@@ -14,6 +16,13 @@ val lpyList = listOf(
         Lpy(1, "ГКП 1"),
         Lpy(2, "ГКП 2"),
         Lpy(3, "ГКП 3")
+)
+
+val paymentList = listOf(
+        PaymentModel(Payment(4, "2021", 300)),
+        PaymentModel(Payment(3, "2020", 500)),
+        PaymentModel(Payment(2, "2019", 400)),
+        PaymentModel(Payment(1, "Вступительный", 300))
 )
 
 fun createMember(id: Int) =  Member().apply {

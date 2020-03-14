@@ -5,6 +5,8 @@ import com.example.demo.data.Member
 import com.example.demo.data.Position
 import com.example.demo.module.member.MemberModel
 import com.example.demo.module.member.PersonalCardMemberView
+import com.example.demo.module.payment.Payment.Companion.PAYMENT_TEXT
+import com.example.demo.module.payment.PaymentView
 import com.example.demo.module.tableMember.TableMemberController
 import com.example.demo.util.Shortcut
 import tornadofx.*
@@ -52,6 +54,14 @@ class MainView : View("НОАВ 2.0") {
             column(Member.DATE_DEPARTURE_TEXT, Member::dateDepartureProperty)
             onDoubleClick { openMemberCard() }
             bindSelected(model)
+           // useMouseDragRowSelect()
+            contextmenu {
+                item("Изменить").action { openMemberCard() }
+                item(PAYMENT_TEXT).action { openInternalWindow<PaymentView>() }
+                item("Удалить").action {
+                    selectedItem?.apply { println("Changing Status for $name") }
+                }
+            }
         }
     }
 
@@ -64,8 +74,9 @@ class MainView : View("НОАВ 2.0") {
 class HelloWorldStyle : Stylesheet() {
     init {
         root {
-            prefWidth = 1200.px
-            prefHeight = 600.px
+
+//            prefWidth = 1200.px
+//            prefHeight = 600.px
         }
     }
 }
