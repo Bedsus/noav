@@ -3,6 +3,7 @@ package com.example.demo.module.main
 import com.example.demo.data.Lpy
 import com.example.demo.data.Member
 import com.example.demo.data.Position
+import com.example.demo.db.DbController
 import com.example.demo.module.member.MemberModel
 import com.example.demo.module.member.PersonalCardMemberView
 import com.example.demo.module.payment.Payment.Companion.PAYMENT_TEXT
@@ -13,8 +14,10 @@ import tornadofx.*
 
 class MainView : View("НОАВ 2.0") {
 
+
     private val controller: TableMemberController by inject()
     private val model: MemberModel by inject()
+    private val db: DbController by inject()
 
     override val root = vbox {
         form {
@@ -45,7 +48,7 @@ class MainView : View("НОАВ 2.0") {
             }
         }
        // listview(controller.loadDogs().message)
-        tableview(controller.memberList) {
+        tableview(db.getMembers()) {
             column(Member.ID_TEXT, Member::idProperty)
             readonlyColumn(Member.FIO_TEXT, Member::fio)
             readonlyColumn(Lpy.LPY_TEXT, Member::lpy) { cellFormat { text = it.name } }
