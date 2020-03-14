@@ -2,6 +2,7 @@ package com.example.demo.app
 
 import com.example.demo.module.main.HelloWorldStyle
 import com.example.demo.module.main.MainView
+import javafx.stage.Stage
 import tornadofx.App
 import tornadofx.Rest
 import tornadofx.replaceWith
@@ -21,8 +22,14 @@ class MyApp: App(MainView::class, HelloWorldStyle::class) {
     init {
         api.baseURI = "https://dog.ceo/"
     }
-   /* override fun start(stage: Stage) { - запретить изменение размера окна (работает только с главным)
-        stage.isResizable = false
+
+    override fun start(stage: Stage) {
         super.start(stage)
-    }*/
+        stage.isMaximized = true
+    }
+
+//    override fun start(stage: Stage) { //- запретить изменение размера окна (работает только с главным)
+//        stage.isResizable = false
+//        super.start(stage)
+//    }
 }
