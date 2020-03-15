@@ -4,7 +4,7 @@ import com.example.demo.data.Member
 import tornadofx.*
 
 class MemberModel(member: Member = Member()) : ItemViewModel<Member>(member) {
-    val id = bind(Member::idProperty)
+    val cart = bind(Member::cartProperty)
     val name = bind(Member::nameProperty)
     val surname = bind(Member::surnameProperty)
     val patronymicName = bind(Member::patronymicNameProperty)

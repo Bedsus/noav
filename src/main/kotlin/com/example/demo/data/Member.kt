@@ -1,7 +1,9 @@
 package com.example.demo.data
 
 import tornadofx.*
+import java.sql.ResultSet
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * Полная информация о члене НОАВ
@@ -10,6 +12,9 @@ class Member {
 
     var id: Int by property(0)
     fun idProperty() = getProperty(Member::id)
+
+    var cart: Int by property(0)
+    fun cartProperty() = getProperty(Member::cart)
 
     var name: String by property("")
     fun nameProperty() = getProperty(Member::name)
@@ -29,7 +34,7 @@ class Member {
     var snils: String by property("")
     fun snilsProperty() = getProperty(Member::snils)
 
-    var dateEntry: LocalDate by property(LocalDate.now())
+    var dateEntry: LocalDate by property<LocalDate>(null)
     fun dateEntryProperty() = getProperty(Member::dateEntry)
 
     var dateDeparture: LocalDate by property<LocalDate>(null)
@@ -54,7 +59,7 @@ class Member {
     fun noteProperty() = getProperty(Member::note)
 
     val fio: String
-        get() = "$surname $name $patronymicName"
+        get() = "${surname.toCapital()} ${name.toCapital()} ${patronymicName.toCapital()}"
 
     override fun toString(): String {
         return """
@@ -77,7 +82,39 @@ class Member {
         """.trimIndent()
     }
 
+    fun convertToModel(set: ResultSet): Member {
+        set.apply {
+            id = getInt("id")
+            cart = getInt("cart")
+            name = getString("name")
+            surname = getString("surname")
+            patronymicName = getString("patronymicName")
+            position = Position(
+                    id = getInt("idPosition"),
+                    name = getString("namePosition")
+            )
+            lpy = Lpy(
+                    id = getInt("idLpu"),
+                    name = getString("nameLpu")
+            )
+            getString("dateEntry")?.let { dateEntry = convertDate(it) }
+            getString("dateDeparture")?.let { dateDeparture = convertDate(it) }
+            note = getString("note") ?: ""
+            email = getString("email") ?: ""
+            return this@Member
+        }
+    }
+
     companion object {
+
+        fun String.toCapital(): String = toLowerCase().capitalize()
+
+        fun convertDate(date: String): LocalDate {
+            return LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_FORMAT))
+        }
+
+        private const val DATE_FORMAT = "yyyy-MM-dd"
+
         const val PERSONAL_CARD_TEXT = "Личная карточка"
         const val MEMBER_TEXT = "Член НОАВ"
         const val ID_TEXT = "Номер членской карты"

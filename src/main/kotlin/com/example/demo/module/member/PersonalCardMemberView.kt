@@ -4,6 +4,7 @@ import com.example.demo.data.Lpy
 import com.example.demo.data.Member
 import com.example.demo.data.Member.Companion.PERSONAL_CARD_TEXT
 import com.example.demo.data.Position
+import com.example.demo.db.DbController
 import com.example.demo.util.Shortcut
 import com.example.demo.view.Notification.showSaveNotification
 import com.example.demo.view.getButton
@@ -14,20 +15,20 @@ import tornadofx.*
 
 class PersonalCardMemberView : View() {
 
-    private val controller: PersonalCardMemberController by inject()
     private val model: MemberModel by inject()
+    private val db: DbController by inject()
 
     override val root = vbox {
         title = PERSONAL_CARD_TEXT
         hbox {
             form {
                 fieldset {
-                    field(Member.ID_TEXT) { text().bind(model.id) }
+                    field(Member.ID_TEXT) { text().bind(model.cart) }
                     field(Member.SURNAME_TEXT) { textfield(model.surname).valid() }
                     field(Member.NAME_TEXT) { textfield(model.name).valid() }
                     field(Member.PATRONYMIC_TEXT) { textfield(model.patronymicName) }
                     field(Position.POSITION_TEXT) {
-                        combobox<Position>(model.position, values = controller.positionObservableList) {
+                        combobox<Position>(model.position, values = db.getPositions()) {
                             cellFormat { text = it.name }
                             validator {
                                 if (it == null || it.name == "") error("Это поле является обязательным") else null
@@ -35,7 +36,7 @@ class PersonalCardMemberView : View() {
                         }
                     }
                     field(Lpy.LPY_TEXT) {
-                        combobox<Lpy>(model.lpy, values = controller.lpyObservableList) {
+                        combobox<Lpy>(model.lpy, values = db.getLpy()) {
                             cellFormat { text = it.name }
                             validator {
                                 if (it == null || it.name == "") error("Это поле является обязательным") else null
