@@ -1,9 +1,10 @@
-package com.example.demo.view
+package com.example.demo.util
 
 import javafx.event.EventTarget
 import javafx.scene.control.Button
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TextArea
+import javafx.scene.control.TextInputControl
 import javafx.util.converter.LocalDateStringConverter
 import tornadofx.*
 import java.time.format.DateTimeFormatter
@@ -26,4 +27,6 @@ fun EventTarget.getDatePicker(): DatePicker {
     }
 }
 
-const val DATE_FORMAT = "dd-MM-yyyy"
+fun TextInputControl.valid() = validator {
+    if (it.isNullOrBlank()) error(THIS_FIELD_REQUIRED) else null
+}

@@ -1,20 +1,19 @@
 package com.example.demo.module.member
 
-import com.example.demo.data.Lpy
-import com.example.demo.data.Member
-import com.example.demo.data.Member.Companion.PERSONAL_CARD_TEXT
-import com.example.demo.data.Position
 import com.example.demo.db.DbController
-import com.example.demo.util.Shortcut
-import com.example.demo.view.Notification.showSaveNotification
-import com.example.demo.view.getButton
-import com.example.demo.view.getDatePicker
-import com.example.demo.view.getTextArea
-import javafx.scene.control.TextInputControl
+import com.example.demo.db.getAllLpyAndOneEmpty
+import com.example.demo.db.getAllPositionsAndOneEmpty
+import com.example.demo.db.saveMember
+import com.example.demo.module.lpy.Lpy
+import com.example.demo.module.member.Member.Companion.PERSONAL_CARD_TEXT
+import com.example.demo.module.position.Position
+import com.example.demo.util.*
+import com.example.demo.util.Notification.showSaveNotification
 import tornadofx.*
 
 class PersonalCardMemberView : View() {
 
+    private val startUpdate: () -> Unit = params[UPDATE_TAG] as () -> Unit
     private val model: MemberModel by inject()
     private val db: DbController by inject()
 
@@ -28,52 +27,49 @@ class PersonalCardMemberView : View() {
                     field(Member.NAME_TEXT) { textfield(model.name).valid() }
                     field(Member.PATRONYMIC_TEXT) { textfield(model.patronymicName) }
                     field(Position.POSITION_TEXT) {
-                        combobox<Position>(model.position, values = db.getPositions()) {
+                        combobox<Position>(model.position, db.getAllPositionsAndOneEmpty()) {
                             cellFormat { text = it.name }
                             validator {
-                                if (it == null || it.name == "") error("Это поле является обязательным") else null
+                                if (it == null || it.name.isEmpty()) error(THIS_FIELD_REQUIRED) else null
                             }
                         }
                     }
                     field(Lpy.LPY_TEXT) {
-                        combobox<Lpy>(model.lpy, values = db.getLpy()) {
+                        combobox<Lpy>(model.lpy, db.getAllLpyAndOneEmpty()) {
                             cellFormat { text = it.name }
                             validator {
-                                if (it == null || it.name == "") error("Это поле является обязательным") else null
+                                if (it == null || it.name.isEmpty()) error(THIS_FIELD_REQUIRED) else null
                             }
                         }
                     }
-                    field(Member.ENTRANCE_FEE_TEXT) { textfield(model.entranceFee) }
-                    field(Member.YEARLY_FEE_TEXT) { textfield(model.yearlyFee) }
                     field(Member.DATE_ENTRY_TEXT) { getDatePicker().bind(model.dateEntry) }
                     field(Member.DATE_DEPARTURE_TEXT) { getDatePicker().bind(model.dateDeparture) }
                 }
             }
             form {
                 fieldset {
-                    field(Member.SNILS_TEXT) { textfield(model.snils) }
+                    field(Member.ENTRANCE_FEE_TEXT) { textfield(model.entranceFee) }
+                    field(Member.YEARLY_FEE_TEXT) { textfield(model.yearlyFee) }
                     field(Member.EMAIL_TEXT) { textfield(model.email) }
-                    field(Member.PHONE_TEXT) { textfield(model.phone) }
-                    field(Member.PARTICIPATE_EVENT_TEXT) { getTextArea().bind(model.participateEvents) }
                     field(Member.NOTE_TEXT) { getTextArea().bind(model.note) }
                 }
             }
         }
-        hbox {
-            getButton(SAVE) { checkBySaveMember() }.apply { shortcut(Shortcut.SAVE.combo) }
-            getButton(CANCEL) { cancel() }.apply { shortcut(Shortcut.EXIT.combo) }
+        form {
+            hbox(10) {
+                getButton(SAVE) { checkBySaveMember() }.apply { shortcut(Shortcut.SAVE.combo) }
+                getButton(CANCEL) { cancel() }.apply { shortcut(Shortcut.EXIT.combo) }
+            }
         }
         model.validate(decorateErrors = false)
     }
 
-    private fun TextInputControl.valid() = validator {
-        if (it.isNullOrBlank()) error("Это поле является обязательным") else null
-    }
-
     private fun checkBySaveMember() {
         model.commit {
+            db.saveMember(model.item)
             showSaveNotification()
-            println("Сохранено!")
+            startUpdate()
+            close()
         }
     }
 
@@ -82,7 +78,7 @@ class PersonalCardMemberView : View() {
     }
 
     companion object {
-        const val SAVE = "Сохранить"
-        const val CANCEL = "Отмена"
+        const val UPDATE_TAG = "update_tag"
+        const val ADD_CARD_MEMBER = "Добавить личную карточку"
     }
 }

@@ -1,5 +1,7 @@
-package com.example.demo.data
+package com.example.demo.module.member
 
+import com.example.demo.module.lpy.Lpy
+import com.example.demo.module.position.Position
 import tornadofx.*
 import java.sql.ResultSet
 import java.time.LocalDate
@@ -28,22 +30,16 @@ class Member {
     var email: String by property("")
     fun emailProperty() = getProperty(Member::email)
 
-    var phone: String by property("")
-    fun phoneProperty() = getProperty(Member::phone)
-
-    var snils: String by property("")
-    fun snilsProperty() = getProperty(Member::snils)
-
     var dateEntry: LocalDate by property<LocalDate>(null)
     fun dateEntryProperty() = getProperty(Member::dateEntry)
 
     var dateDeparture: LocalDate by property<LocalDate>(null)
     fun dateDepartureProperty() = getProperty(Member::dateDeparture)
 
-    var lpy: Lpy by property(lpyList[0])
+    var lpy: Lpy by property(Lpy())
     fun lpyProperty() = getProperty(Member::lpy)
 
-    var position: Position by property(positionList[0])
+    var position: Position by property(Position())
     fun positionProperty() = getProperty(Member::position)
 
     var yearlyFee: String by property("")
@@ -52,11 +48,14 @@ class Member {
     var entranceFee: String by property("")
     fun entranceFeeProperty() = getProperty(Member::entranceFee)
 
-    var participateEvents: String by property("")
-    fun participateEventsProperty() = getProperty(Member::participateEvents)
-
     var note: String by property("")
     fun noteProperty() = getProperty(Member::note)
+
+    val dateEntryText: String?
+        get() = if(dateEntry != null) "'$dateEntry'" else null
+
+    val dateDepartureText: String?
+        get() = if(dateDeparture != null) "'$dateDeparture'" else null
 
     val fio: String
         get() = "${surname.toCapital()} ${name.toCapital()} ${patronymicName.toCapital()}"
@@ -69,13 +68,10 @@ class Member {
         * [$name] - $NAME_TEXT
         * [$patronymicName] - $PATRONYMIC_TEXT
         * [$email] - $EMAIL_TEXT
-        * [$phone] - $PHONE_TEXT
-        * [$snils] - $SNILS_TEXT
         * [$dateEntry] - $DATE_ENTRY_TEXT
         * [$dateDeparture] - $DATE_DEPARTURE_TEXT
         * [$yearlyFee] - $YEARLY_FEE_TEXT
         * [$entranceFee] - $ENTRANCE_FEE_TEXT
-        * [$participateEvents] - $PARTICIPATE_EVENT_TEXT
         * [$note] - $NOTE_TEXT
         $position
         $lpy
@@ -123,13 +119,10 @@ class Member {
         const val PATRONYMIC_TEXT = "Отчество"
         const val FIO_TEXT = "ФИО"
         const val EMAIL_TEXT = "E-Mail"
-        const val PHONE_TEXT = "Телефон"
-        const val SNILS_TEXT = "СНИЛС"
         const val DATE_ENTRY_TEXT = "Дата вступления"
         const val DATE_DEPARTURE_TEXT = "Дата выхода"
         const val YEARLY_FEE_TEXT = "Ежегодный взнос"
         const val ENTRANCE_FEE_TEXT = "Вступительный взнос"
-        const val PARTICIPATE_EVENT_TEXT = "Участие в конкурсах"
         const val NOTE_TEXT = "Примечание"
     }
 }
